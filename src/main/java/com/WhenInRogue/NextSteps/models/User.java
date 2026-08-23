@@ -1,6 +1,7 @@
 package com.WhenInRogue.NextSteps.models;
 
 import com.WhenInRogue.NextSteps.enums.UserRole;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,10 @@ public class User {
     @NotBlank(message = "Password is required")
     private String password;
 
+    @NotBlank(message = "Phone Number is required")
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
@@ -45,6 +50,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", role=" + role +
                 ", createdAt=" + createdAt +
                 '}';

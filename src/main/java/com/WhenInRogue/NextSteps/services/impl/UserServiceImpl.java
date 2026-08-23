@@ -4,6 +4,9 @@ import com.WhenInRogue.NextSteps.dtos.LoginRequest;
 import com.WhenInRogue.NextSteps.dtos.RegisterRequest;
 import com.WhenInRogue.NextSteps.dtos.Response;
 import com.WhenInRogue.NextSteps.dtos.UserDTO;
+import com.WhenInRogue.NextSteps.enums.UserRole;
+import com.WhenInRogue.NextSteps.exceptions.InvalidCredentialsException;
+import com.WhenInRogue.NextSteps.exceptions.NotFoundException;
 import com.WhenInRogue.NextSteps.models.User;
 import com.WhenInRogue.NextSteps.repositories.UserRepository;
 import com.WhenInRogue.NextSteps.security.JwtUtils;
@@ -11,8 +14,14 @@ import com.WhenInRogue.NextSteps.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,36 +35,122 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response registerUser(RegisterRequest registerRequest) {
-        return null;
+
+        UserRole role = UserRole.MEMBER;
+
+        if (registerRequest.getRole() != null) {
+            role = registerRequest.getRole();
+        }
+
+        User userToSave = User.builder()
+                .name(registerRequest.getName())
+                .email(registerRequest.getEmail())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .phoneNumber(registerRequest.getPhoneNumber())
+                .role(role)
+                .build();
+
+        userRepository.save(userToSave);
+
+        return Response.builder()
+                .status(200)
+                .message("User was successfully registered")
+                .build();
     }
 
     @Override
     public Response loginUser(LoginRequest loginRequest) {
-        return null;
+
+        User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new NotFoundException("Email Not Found"));
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new InvalidCredentialsException("Password Does Not Match");
+        }
+        String token = jwtUtils.generateToken(user.getEmail());
+
+        return Response.builder()
+                .status(200)
+                .message("User Logged in Successfully")
+                .role(user.getRole())
+                .token(token)
+                .expirationTime("6 months")
+                .build();
     }
 
     @Override
     public Response getAllUsers() {
-        return null;
+
+        List<User> users = userRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+
+        List<UserDTO> userDTOS = modelMapper.map(users, new TypeToken<List<UserDTO>>() {
+        }.getType());
+
+        return Response.builder()
+                .status(200)
+                .message("success")
+                .users(userDTOS)
+                .build();
     }
 
     @Override
     public User getCurrentLoggedInUser() {
-        return null;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User Not Found"));
+
+        return user;
     }
 
     @Override
     public Response getUserById(Long id) {
-        return null;
+
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User Not Found"));
+
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+        return Response.builder()
+                .status(200)
+                .message("success")
+                .user(userDTO)
+                .build();
     }
 
     @Override
     public Response updateUser(Long id, UserDTO userDTO) {
-        return null;
+
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User Not Found"));
+
+        if (userDTO.getEmail() != null) existingUser.setEmail(userDTO.getEmail());
+        if (userDTO.getPhoneNumber() != null) existingUser.setPhoneNumber(userDTO.getPhoneNumber());
+        if (userDTO.getName() != null) existingUser.setName(userDTO.getName());
+        if (userDTO.getRole() != null) existingUser.setRole(userDTO.getRole());
+
+        if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+        userRepository.save(existingUser);
+
+        return Response.builder()
+                .status(200)
+                .message("User successfully updated")
+                .build();
     }
 
     @Override
     public Response deleteUser(Long id) {
-        return null;
+
+        userRepository.findById(id).orElseThrow(() -> new NotFoundException("User Not Found"));
+
+        userRepository.deleteById(id);
+
+        return Response.builder()
+                .status(200)
+                .message("User successfully Deleted")
+                .build();
     }
+
 }
