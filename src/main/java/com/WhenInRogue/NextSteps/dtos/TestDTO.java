@@ -1,7 +1,5 @@
 package com.WhenInRogue.NextSteps.dtos;
 
-import com.WhenInRogue.NextSteps.enums.UserRole;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -14,24 +12,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(
-        value = {},
-        allowSetters = true
-)
-public class UserDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class TestDTO {
 
     private Long id;
 
     private String name;
 
-    private String email;
-
-    @JsonIgnore
-    private String password;
-
-    private String phoneNumber;
+    private String description;
 
     private LocalDateTime createdAt;
-
-    private UserRole role;
 }

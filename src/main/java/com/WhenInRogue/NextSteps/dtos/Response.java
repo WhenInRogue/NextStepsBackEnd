@@ -28,4 +28,7 @@ public class Response {
     //data output optionals
     private UserDTO user;
     private List<UserDTO> users;
+
+    private TestDTO test;
+    private List<TestDTO> tests;
 }
