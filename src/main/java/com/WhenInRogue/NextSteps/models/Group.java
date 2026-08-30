@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "groups")
+@Table(name = "user_groups")
 @Data
 @Builder
 public class Group {
@@ -20,7 +20,7 @@ public class Group {
     private Long groupId;
 
     @NotBlank(message = "Group name is required")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     private String description;

@@ -1,5 +1,6 @@
 package com.WhenInRogue.NextSteps.repositories;
 
+import com.WhenInRogue.NextSteps.enums.GroupPosition;
 import com.WhenInRogue.NextSteps.models.Group;
 import com.WhenInRogue.NextSteps.models.GroupMembership;
 import com.WhenInRogue.NextSteps.models.User;
@@ -16,7 +17,13 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 
     List<GroupMembership> findByUserAndIsActiveTrue(User user);
 
+    List<GroupMembership> findByGroupAndIsActiveTrue(Group group);
+
     Optional<GroupMembership> findByGroupAndUser(Group group, User user);
 
     boolean existsByGroupAndUser(Group group, User user);
+
+    boolean existsByGroupAndUserAndIsActiveTrue(Group group, User user);
+
+    boolean existsByGroupAndUserAndIsActiveTrueAndPosition(Group group, User user, GroupPosition position);
 }

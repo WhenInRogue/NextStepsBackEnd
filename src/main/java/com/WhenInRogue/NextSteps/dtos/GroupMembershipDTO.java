@@ -1,5 +1,6 @@
 package com.WhenInRogue.NextSteps.dtos;
 
+import com.WhenInRogue.NextSteps.enums.GroupPosition;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -15,11 +16,13 @@ public class GroupMembershipDTO {
 
     private Long groupMembershipId;
 
-    private String position;
+    private GroupPosition position;
 
     private Boolean isActive;
 
     private GroupDTO group;
 
     private UserDTO user;
+
+    private Long userId;
 }

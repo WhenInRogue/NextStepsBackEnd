@@ -1,5 +1,6 @@
 package com.WhenInRogue.NextSteps.models;
 
+import com.WhenInRogue.NextSteps.enums.GroupPosition;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +17,9 @@ public class GroupMembership {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupMembershipId;
 
-    private String position;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GroupPosition position;
 
     @Column(name = "is_active", nullable = false)
     @Builder.Default
@@ -40,7 +43,7 @@ public class GroupMembership {
     public String toString() {
         return "GroupMembership{" +
                 "groupMembershipId=" + groupMembershipId +
-                ", position='" + position + '\'' +
+                ", position=" + position +
                 ", isActive=" + isActive +
                 '}';
     }
