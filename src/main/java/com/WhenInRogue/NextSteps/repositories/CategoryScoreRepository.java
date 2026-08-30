@@ -13,6 +13,8 @@ public interface CategoryScoreRepository extends JpaRepository<CategoryScore, Lo
 
     List<CategoryScore> findByTestResult(TestResult testResult);
 
+    List<CategoryScore> findByTestResultOrderByCategory_CategoryTypeAscCategory_CategoryNameAsc(TestResult testResult);
+
     Optional<CategoryScore> findByTestResultAndCategory(TestResult testResult, Category category);
 
     List<CategoryScore> findByTestResult_User(User user);

@@ -12,9 +12,13 @@ public interface TestResultRepository extends JpaRepository<TestResult, Long> {
 
     List<TestResult> findByUser(User user);
 
+    List<TestResult> findByUserOrderByTestResultIdDesc(User user);
+
     List<TestResult> findByTest(Test test);
 
     List<TestResult> findByUserAndCompleteTrue(User user);
 
     Optional<TestResult> findFirstByUserAndTestOrderByTestResultIdDesc(User user, Test test);
+
+    Optional<TestResult> findFirstByUserAndTestAndCompleteFalseOrderByTestResultIdDesc(User user, Test test);
 }

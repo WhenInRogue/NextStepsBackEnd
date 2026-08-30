@@ -32,6 +32,16 @@ public class TestController {
         return ResponseEntity.ok(testService.getTestById(id));
     }
 
+    @PostMapping("/{id}/take")
+    public ResponseEntity<Response> takeTest(@PathVariable Long id) {
+        return ResponseEntity.ok(testService.takeTest(id));
+    }
+
+    @PostMapping("/submit/{testResultId}")
+    public ResponseEntity<Response> submitTest(@PathVariable Long testResultId) {
+        return ResponseEntity.ok(testService.submitTest(testResultId));
+    }
+
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateTest(@PathVariable Long id, @RequestBody @Valid TestDTO testDTO){

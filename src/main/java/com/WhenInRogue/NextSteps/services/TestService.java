@@ -19,8 +19,8 @@ public interface TestService {
     //Delete
     Response deleteTest(Long id);
 
-    //Take Test
-    Response takeTest(Long id);
+    //Take / submit
+    Response takeTest(Long testId);
 
-    Response submitTest(Long id);
+    Response submitTest(Long testResultId);
 }

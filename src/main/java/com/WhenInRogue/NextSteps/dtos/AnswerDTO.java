@@ -18,4 +18,6 @@ public class AnswerDTO {
     private Integer responseValue;
 
     private QuestionDTO question;
+
+    private Long questionId;
 }

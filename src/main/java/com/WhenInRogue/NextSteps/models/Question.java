@@ -24,7 +24,7 @@ public class Question {
     private Long questionId;
 
     @NotNull(message = "Question number is required")
-    @Column(name = "question_number", nullable = false, unique = true)
+    @Column(name = "question_number", nullable = false)
     private Integer questionNumber;
 
     @NotBlank(message = "Question text is required")

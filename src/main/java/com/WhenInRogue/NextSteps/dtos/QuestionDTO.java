@@ -22,4 +22,6 @@ public class QuestionDTO {
     private CategoryDTO category;
 
     private TestDTO test;
+
+    private Long categoryId;
 }

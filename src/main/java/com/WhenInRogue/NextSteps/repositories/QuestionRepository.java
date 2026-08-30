@@ -14,4 +14,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findByCategory(Category category);
 
     long countByTestAndCategory(Test test, Category category);
+
+    boolean existsByTestAndQuestionNumber(Test test, Integer questionNumber);
 }
