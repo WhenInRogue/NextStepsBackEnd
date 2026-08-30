@@ -31,4 +31,25 @@ public class Response {
 
     private TestDTO test;
     private List<TestDTO> tests;
+
+    private GroupDTO group;
+    private List<GroupDTO> groups;
+
+    private GroupMembershipDTO groupMembership;
+    private List<GroupMembershipDTO> groupMemberships;
+
+    private CategoryDTO category;
+    private List<CategoryDTO> categories;
+
+    private QuestionDTO question;
+    private List<QuestionDTO> questions;
+
+    private TestResultDTO testResult;
+    private List<TestResultDTO> testResults;
+
+    private AnswerDTO answer;
+    private List<AnswerDTO> answers;
+
+    private CategoryScoreDTO categoryScore;
+    private List<CategoryScoreDTO> categoryScores;
 }
