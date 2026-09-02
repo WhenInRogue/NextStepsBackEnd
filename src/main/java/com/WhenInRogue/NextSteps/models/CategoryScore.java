@@ -30,6 +30,13 @@ public class CategoryScore {
     @Min(value = 0, message = "Value cannot be negative")
     private Integer maxPoints;
 
+    @Transient
+    public double getPercentage() {
+        if (maxPoints == null || maxPoints == 0 || totalRawPoints == null) {
+            return 0.0;
+        }
+        return Math.round(totalRawPoints * 10000.0 / maxPoints) / 100.0;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)

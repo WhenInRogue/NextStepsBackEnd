@@ -2,7 +2,6 @@ package com.WhenInRogue.NextSteps.controllers;
 
 import com.WhenInRogue.NextSteps.dtos.Response;
 import com.WhenInRogue.NextSteps.dtos.UserDTO;
-import com.WhenInRogue.NextSteps.models.User;
 import com.WhenInRogue.NextSteps.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +39,7 @@ public class UserController {
 
 
     @GetMapping("/current")
-    public ResponseEntity<User> getCurrentUser(){
-        return ResponseEntity.ok(userService.getCurrentLoggedInUser());
+    public ResponseEntity<Response> getCurrentUser() {
+        return ResponseEntity.ok(userService.getCurrentUser());
     }
 }

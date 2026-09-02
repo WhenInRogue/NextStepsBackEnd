@@ -15,6 +15,8 @@ public interface UserService {
 
     User getCurrentLoggedInUser();
 
+    Response getCurrentUser();
+
     Response getUserById(Long id);
 
     Response updateUser(Long id, UserDTO userDTO);

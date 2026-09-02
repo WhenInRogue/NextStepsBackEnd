@@ -19,5 +19,7 @@ public class CategoryScoreDTO {
 
     private Integer maxPoints;
 
+    private Double percentage;
+
     private CategoryDTO category;
 }
