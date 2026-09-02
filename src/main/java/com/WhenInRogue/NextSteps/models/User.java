@@ -32,8 +32,7 @@ public class User {
     @NotBlank(message = "Password is required")
     private String password;
 
-    @NotBlank(message = "Phone Number is required")
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = true)
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
